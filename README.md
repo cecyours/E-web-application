@@ -1,5 +1,9 @@
 # E-web-application
 >
+| 21 <sup>st</sup> Feb
+
+1. create spring web application to perform data base crud operations.
+2. create web pages for products, seller & buyers & perform relationships. 
 
 | 16 <sup>th</sup> Feb
 
