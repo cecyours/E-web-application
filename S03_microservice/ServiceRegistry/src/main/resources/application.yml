@@ -1,0 +1,10 @@
+
+server:
+  port: 8090
+
+  servlet:
+    application-display-name: sample
+eureka:
+  client:
+    registerWithEureka: false
+    fetch-registry: false
