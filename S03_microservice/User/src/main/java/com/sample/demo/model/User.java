@@ -1,6 +1,9 @@
 package com.sample.demo.model;
 
+import java.util.ArrayList;
+
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.AllArgsConstructor;
@@ -15,6 +18,10 @@ public class User {
 	private String userId;
 	private String userName;
 	private String userPass;
+	
+	@Transient
+	private ArrayList<Cart> cartList;
+	
 	public String getUserId() {
 		return userId;
 	}
@@ -38,6 +45,21 @@ public class User {
 		this.userId = userId;
 		this.userName = userName;
 		this.userPass = userPass;
+	}
+	
+	
+	public User(String userId, String userName, String userPass, ArrayList<Cart> cartList) {
+		super();
+		this.userId = userId;
+		this.userName = userName;
+		this.userPass = userPass;
+		this.cartList = cartList;
+	}
+	public ArrayList<Cart> getCartList() {
+		return cartList;
+	}
+	public void setCartList(ArrayList<Cart> cartList) {
+		this.cartList = cartList;
 	}
 	public User() {
 		super();

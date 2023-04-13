@@ -1,0 +1,18 @@
+server:
+  port: 8092
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017
+      database: user_db
+  application:
+    name: USER2
+
+eureka:
+  instance:
+    ip-address: true
+  client:
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: http://localhost:8090/eureka
