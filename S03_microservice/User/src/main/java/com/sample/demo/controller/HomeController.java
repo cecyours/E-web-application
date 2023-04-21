@@ -1,6 +1,7 @@
 package com.sample.demo.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,20 +18,31 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sample.demo.model.Cart;
+import com.sample.demo.model.Product;
 import com.sample.demo.model.User;
+import com.sample.demo.request.CartService;
+import com.sample.demo.request.ProductService;
 import com.sample.demo.service.UserService;
 
 @RestController
 @RequestMapping("/user")
 public class HomeController {
 
+	List<Cart> cList;
+	Cart c;
 	@Autowired
 	UserService service;
 	
 	@Autowired
 	RestTemplate restTemplate;
 	
+	@Autowired
+	ProductService productService;
+	@Autowired
+	CartService cartService;
 	@PostMapping("/add")
 	public ResponseEntity<User> addUser(@RequestBody User u)
 	{
@@ -48,9 +60,40 @@ public class HomeController {
 	{
 		User  user = service.getUser(userId).get();
 		
-		ArrayList<Cart> cList = restTemplate.getForObject("http://localhost:8096/cart/user/"+user.getUserId(), ArrayList.class);
+//		 cList = restTemplate.getForObject("http://CART-SERVICE:8096/cart/user/"+user.getUserId(), ArrayList.class);
 		
-		user.setCartList(cList);
+		cList = cartService.getCartList(user.getUserId());
+//		ArrayList<Cart> new_list = new ArrayList();
+		
+		System.out.print(cList.size());
+		System.out.println(" hello me...");
+//		
+		System.out.print("Heiilo");
+		 
+		ObjectMapper mapper = new ObjectMapper();
+		
+		List<Cart> myCartList = mapper.convertValue(
+			    cList, 
+			    new TypeReference<List<Cart>>(){}
+			);
+		
+		for(int i=0;i<myCartList.size();i++)
+		{
+			Product p = productService.getProduct(myCartList.get(i).getProductId());
+			Cart c = myCartList.get(i);
+			c.setProduct(p);
+			myCartList.set(i,c);
+		}
+//		System.out.print(accountList.get(0).getCartId());
+//		String pId = myCartList.get(0).getProductId();
+//	
+//		System.out.print("help : "+productService.getProduct(pId));
+//		Cart c = myCartList.get(0);
+//		
+//		c.setProduct(productService.getProduct(c.getProductId()));
+//		myCartList.set(0, c);
+		
+		user.setCartList(myCartList);
 		
 		return ResponseEntity.ok(user);
 	}

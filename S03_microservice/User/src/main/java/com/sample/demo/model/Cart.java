@@ -13,11 +13,13 @@ public class Cart {
 	private String userId;
 	private String productId;
 	private int productQuanity;
+	
 	 
 	private Date createdOn = new Date();
 	 
 	private Date updatedOn = new Date();
 
+	private Product product;
 	
 	@Override
 	public String toString() {
@@ -73,17 +75,25 @@ public class Cart {
 		this.updatedOn = updatedOn;
 	}
 
-	public Cart(String cartId, String userId, String productId, int productQuanity, Date createdOn,
-			Date updatedOn) {
-
+ 
+	public Cart(String cartId, String userId, String productId, int productQuanity, Date createdOn, Date updatedOn,
+			Product product) {
 		super();
-		TimeZone.setDefault(TimeZone.getTimeZone("IST"));
 		this.cartId = cartId;
 		this.userId = userId;
 		this.productId = productId;
 		this.productQuanity = productQuanity;
 		this.createdOn = createdOn;
 		this.updatedOn = updatedOn;
+		this.product = product;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 
 	public Cart() {

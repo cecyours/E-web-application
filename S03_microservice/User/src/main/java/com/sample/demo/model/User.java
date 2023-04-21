@@ -1,6 +1,6 @@
 package com.sample.demo.model;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
@@ -20,7 +20,7 @@ public class User {
 	private String userPass;
 	
 	@Transient
-	private ArrayList<Cart> cartList;
+	private List<Cart> cartList;
 	
 	public String getUserId() {
 		return userId;
@@ -48,17 +48,17 @@ public class User {
 	}
 	
 	
-	public User(String userId, String userName, String userPass, ArrayList<Cart> cartList) {
+	public User(String userId, String userName, String userPass, List<Cart> cartList) {
 		super();
 		this.userId = userId;
 		this.userName = userName;
 		this.userPass = userPass;
 		this.cartList = cartList;
 	}
-	public ArrayList<Cart> getCartList() {
+	public List<Cart> getCartList() {
 		return cartList;
 	}
-	public void setCartList(ArrayList<Cart> cartList) {
+	public void setCartList(List<Cart> cartList) {
 		this.cartList = cartList;
 	}
 	public User() {
