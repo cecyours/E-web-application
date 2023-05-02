@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: CONFIG-SEREVER
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/cecyours/SPRING-CONFIG-SERVER
