@@ -27,6 +27,9 @@ import com.sample.demo.request.CartService;
 import com.sample.demo.request.ProductService;
 import com.sample.demo.service.UserService;
 
+import feign.Response;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+
 @RestController
 @RequestMapping("/user")
 public class HomeController {
@@ -56,6 +59,7 @@ public class HomeController {
 	}
 	
 	@GetMapping("/im/{userId}")
+//	 @CircuitBreaker(name="cart_product23",fallbackMethod ="cartProductHandlerFallBack")
 	public ResponseEntity<User> getUser(@PathVariable("userId") String userId)
 	{
 		User  user = service.getUser(userId).get();
@@ -66,9 +70,9 @@ public class HomeController {
 //		ArrayList<Cart> new_list = new ArrayList();
 		
 		System.out.print(cList.size());
-		System.out.println(" hello me...");
+		System.out.println(" hello me..."+cList.size());
 //		
-		System.out.print("Heiilo");
+		System.out.print("Heiilo " );
 		 
 		ObjectMapper mapper = new ObjectMapper();
 		
@@ -95,6 +99,14 @@ public class HomeController {
 		
 		user.setCartList(myCartList);
 		
+		return ResponseEntity.ok(user);
+	}
+	
+	public ResponseEntity<User> cartProductHandlerFallBack(String userId,Exception e)
+	{
+		User user = service.getUser(userId).get();
+//		user.setUserName("Aman Bhai..");
+		System.out.println("out of service...");
 		return ResponseEntity.ok(user);
 	}
 }
